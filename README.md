@@ -1,7 +1,7 @@
 # Stiching_Alignment_Tool
 Stiching and Alignment Tool for microscopy images by python
 
-# This toolkit consists of two tools: image stitching and alignment for microscopy images
+## This toolkit consists of two tools: image stitching and alignment for microscopy images
 
 ## Getting started
 
