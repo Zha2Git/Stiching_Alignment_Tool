@@ -1,0 +1,16 @@
+DAPI1|DAPI|Tissue_Panel1_Combined
+aSMA|Opal 480|Tissue_Panel1_Combined
+CD3|Opal 520|Tissue_Panel1_Combined
+CD68|Opal 570|Tissue_Panel1_Combined
+gamma-H2AX|Opal 620|Tissue_Panel1_Combined
+CC3|Opal 690|Tissue_Panel1_Combined
+CD4|Opal 780|Tissue_Panel1_Combined
+AF_P1|Autofluorescence|Tissue_Panel1_Combined
+DAPI2|DAPI|Tissue_Panel2_Combined
+Granzyme B|Opal 480|Tissue_Panel2_Combined
+CD8|Opal 520|Tissue_Panel2_Combined
+panCK|Opal 570|Tissue_Panel2_Combined
+Ki67|Opal 620|Tissue_Panel2_Combined
+PD-L1|Opal 690|Tissue_Panel2_Combined
+-|Opal 780|Tissue_Panel2_Combined
+AF_P2|Autofluorescence|Tissue_Panel2_Combined
