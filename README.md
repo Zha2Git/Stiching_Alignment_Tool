@@ -1,4 +1,4 @@
-# Microscopy Image Processing Toolkit
+# Stiching_Alignment_Tool
 
 This toolkit consists of two tools: **image stitching** and **alignment** for microscopy images.
 
@@ -134,3 +134,4 @@ Set the **root directory** in `OmeTiff_Stiching_Batch_Processing.ipynb`, then ru
 ### Command-Line Interface
 
 If you want to call the `main.py` function through the **command-line interface** instead of running it in **Jupyter Notebook**, or to learn about the detailed functions of each module of **HiFiAlignmentTool**, please read the **README file of the original developer**.
+
