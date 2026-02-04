@@ -45,8 +45,6 @@ python3 -m pip install --user -r requirements.txt
 
 ## Tool Descriptions
 
-## Tool Descriptions
-
 ### Tool 1: Image Stitching
 
 **Developer**: Independently developed by Y.Zhang  
@@ -134,4 +132,5 @@ Set the **root directory** in `OmeTiff_Stiching_Batch_Processing.ipynb`, then ru
 ### Command-Line Interface
 
 If you want to call the `main.py` function through the **command-line interface** instead of running it in **Jupyter Notebook**, or to learn about the detailed functions of each module of **HiFiAlignmentTool**, please read the **README file of the original developer**.
+
 
