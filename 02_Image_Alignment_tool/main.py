@@ -66,13 +66,22 @@ parser.add_argument(
   default=0.33,
   help ='Scale factor between 0. - 1. (only used if --downscale is set)'
 )
+
 parser.add_argument(
-  '--nofinalimage',
+  '--makefinalimage',
   action='store_const',
-  const=False,
+  const=True,
   default=True,
-  help='If you do not want to create the final image with all the channels'
+  help='If you want to create the final image with all the channels'
 )
+parser.add_argument(
+  '--nofinalflat',
+  action='store_const',
+  const=True,
+  default=True,
+  help='If you use this argument, the code will skip writing the flat final image'
+)
+
 parser.add_argument(
   '--background',
   type = str,
@@ -96,7 +105,7 @@ parser.add_argument(
   '--pyramidal',
   action='store_const',
   const=True,
-  default=False,
+  default=True,
   help='If you use this argument, the code will save an additional final_image that is a tiled, multi-resolution OME-TIFF file'
 )
 choices = ['czi', 'tif']

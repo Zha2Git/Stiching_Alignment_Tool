@@ -67,28 +67,33 @@ def channel_check(args, source):
   # Verifies that the CSV file is compatible with the image shape and 
   # that the images called in CSV all have the reference channel
   print('------- Verifying that CSV file matches images -------')
-  ref = args.reference
   data_strct = pd.read_csv("channel_name.csv")
   name_header = data_strct.columns[0]
 
+  # CR2: Build per-image reference map; exclude Reference_Channel from physical channel columns
+  has_ref_col = 'Reference_Channel' in data_strct.columns
+  channel_cols = [c for c in data_strct.columns[1:] if c != 'Reference_Channel']
+
+  def get_img_ref(i):
+    if has_ref_col:
+      v = str(data_strct['Reference_Channel'][i]).strip()
+      return args.reference if (v in ('nan', '')) else v
+    return args.reference
+
   #To check if the reference channel is present in all images
   for i in range(data_strct.shape[0]):
-    if(str(data_strct[ref][i]) == 'nan'):
-      print('Image', data_strct[name_header][i],'does not have the reference channel.')
-      print(data_strct[[name_header,ref]])
+    ref = get_img_ref(i)
+    if ref not in data_strct.columns or str(data_strct[ref][i]) == 'nan':
+      print('Image', data_strct[name_header][i],'does not have reference channel:', ref)
+      print(data_strct[[name_header]])
       print('Please check your CSV file.')
       print('--------- Terminating program ---------')
       exit()
   print('Reference channel is present in all images, continue program.')
 
   #To check if the images have the same number of channels as in the CSV
-  idx_values = data_strct.copy()
-  for i in range(data_strct.shape[0]):
-    idx = 0
-    for j in range(data_strct.shape[1]-1):
-      if(str(data_strct[data_strct.columns[j+1]][i]) != 'nan'):
-        idx_values[data_strct.columns[j+1]][i] = idx
-        idx += 1
+  channel_counts = data_strct[channel_cols].apply(
+      lambda row: sum(1 for v in row if str(v) != 'nan'), axis=1)
 
   file = open(os.path.join(source,'image_shape.txt'),'r')
   images_shape = file.read()
@@ -102,14 +107,15 @@ def channel_check(args, source):
     removeLast = 1
   for i in range(len(split)-removeLast):
     chan = split[i].split(',')
-    if(int(chan[0]) != idx_values.iloc[:,-1][i]+1):
-      print('The number of channels in CSV file doesn’t match the number of channels in image', idx_values.iloc[:,0][i],'.')
-      print(int(split[i].split(',')[0]),'in image', idx_values.iloc[:,0][i] ,'and', idx_values.iloc[:,-1][i]+1,'in CSV file.')
+    if(int(chan[0]) != channel_counts.iloc[i]):
+      print('The number of channels in CSV does not match the number of channels in image', data_strct[name_header][i],'.')
+      print(int(split[i].split(',')[0]),'in image', data_strct[name_header][i] ,'and', channel_counts.iloc[i],'in CSV file.')
       print(data_strct.loc[i])
       print('Please modify your CSV file')
       print('--------- Terminating program ---------')
       exit()
   print('------- CSV file matches images and all images have the reference channel -------')
+
 
 def get_img_dim(args, source):
   #If reassembling is not done, the images in source will be loaded and the dimension is saved in a txt file.
@@ -168,7 +174,7 @@ def run(args):
     print("------- No Reassembling done -------")
 
   if not args.disable_registration:
-    source = args.destination
+    source = args.source
     files = get_tiffiles(source)
     list_files(source,files)
 
@@ -182,7 +188,7 @@ def run(args):
   else:
     print("------- No image registration -------")
 
-  if args.nofinalimage:
+  if args.makefinalimage:
     source = './aligned'
     files = get_aligned_tiffiles(source)
     list_files(source,files)
@@ -197,13 +203,13 @@ def run(args):
   else:
     print("------- No final image --------")
 
-  if args.pyramidal:
+  # CR3: Pyramidal is now called inside final_image() when a final image is created.
+  # This block handles the standalone case: but pyramidal re-generation is needed.
+  if not args.makefinalimage and args.pyramidal:
     start_time = datetime.now()
     pyramidal_final_image(args)
     end_time = datetime.now()
     print('--------- Pyramidal_final_image Duration: {}'.format(end_time - start_time), '\n')
-  else:
-    print("------- No compressed tiled pyramidal final image --------")
 
   all_end_time = datetime.now()
   print('--- Total Duration: {}'.format(all_end_time - all_start_time), '\n')
