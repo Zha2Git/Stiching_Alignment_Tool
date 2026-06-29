@@ -82,7 +82,7 @@ Set the **root directory** in `OmeTiff_Stitching_Batch_Processing.ipynb`, then r
 ##### 1.6 Output Results
 
 - The program generates **target files**, retaining the **layer names** of the fragment files
-- Saves them in their respective subfolders, ending with `XXXX_Combined.ome.tif`
+- Saves them in their respective subfolders, ending with `_Combined_float32.ome.tif`
 - These stitched target files will be provided to the **next alignment tool** for alignment and layer merging operations
 
 ---
@@ -100,13 +100,21 @@ Set the **root directory** in `OmeTiff_Stitching_Batch_Processing.ipynb`, then r
 
 - Copy the stitched target image to be aligned and merged to the `source` folder
 - Keep the filename format as `xxxx.ome.tif`
-- **Examples**: `Panel1_Combined.ome.tif`, `Panel2_Combined.ome.tif`, etc.
+- **Examples**: `Panel1_Combined_float32.ome.tif`, `Panel2_Combined_float32.ome.tif`, etc.
 
 ##### 2.2 Configure Channel Names
 
 - Open the `channel_name` directory
 - Modify the filename to match the file to be aligned (**excluding** the `.ome.tif` extension)
-- Name each layer
+- Name each layer in the final Image, if the name is "empty" or "-", the layer will be skipped and not used.
+
+- The default reference layer for alignment is DAPI, the reference can be changed individual: 
+
+Example: 
+Filename,DAPI,Opal 480,Opal 520,Opal 570,Opal 620,Opal 690,Opal 780,Autofluorescence,Reference
+Tissue_Panel1_Combined_float32,DAPI1,aSMA,CD3,CD68,gamma-H2AX,CC3,CD4,AF_P1,DAPI
+Tissue_Panel2_Combined_float32,DAPI2,Granzyme B,CD8,panCK,Ki67,PD-L1,-,AF_P2,DAPI
+- 
 
 ##### 2.3 Run the Program
 
@@ -120,9 +128,9 @@ Set the **root directory** in `OmeTiff_Stitching_Batch_Processing.ipynb`, then r
 - Output to the `aligned` folder
 - Filename contains the `al` field
 
-**Final Composite Files** (if parameters are set to output, default enabled):
-- **Uncompressed image**: `final_image.ome.tif` (in the same folder as `main.ipynb`)
-- **Pyramid-sampled compressed image**: `pyr_final_image.ome.tif`
+**Final Composite Files** (default enabled with "makefinalimage=True", output path in "destination" ):
+- **Uncompressed flat image without Pyramid**: `final_image_flat.ome.tif` ( default disabled with "nofinalflat= false" )
+- **Pyramid-sampled upcompressed image**: `pyr_final_image_unpressed.ome.tif` 
 
 ---
 

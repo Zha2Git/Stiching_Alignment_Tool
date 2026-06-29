@@ -280,7 +280,7 @@ def combine_tiff_arrays(df_files: pd.DataFrame, path: str) -> np.ndarray:
     print(f"Tile dimensions: {n_channels} channels x {xlength} x {ylength}")
     
     # Create an empty array for the combined image
-    combined_array = np.zeros((n_channels, R * xlength, C * ylength), dtype=np.uint16)
+    combined_array = np.zeros((n_channels, R * xlength, C * ylength), dtype=np.float32)
     
     # Fill in each tile
     for idx, row in df_files.iterrows():
@@ -390,7 +390,7 @@ def OmeTiff_align(path: str, output_suffix: str = "Combined", exclude_files: lis
     # Prepare tifffile OME metadata
     ome_meta = {
         'axes': 'CYX',
-        'SignificantBits': 16,
+        'SignificantBits': 32,
     }
 
     # Add channel names in OME metadata
@@ -410,11 +410,17 @@ def OmeTiff_align(path: str, output_suffix: str = "Combined", exclude_files: lis
         ome=True,
         metadata=ome_meta,
     )
-
+    
     print(f"\n✓ Successfully saved combined image to: {output_path}")
     print(f"  Shape: {combined_array.shape}")
     print(f"  Size: {os.path.getsize(output_path) / (1024 ** 2):.2f} MB")
     print("=" * 80)
+
+    #step 9: export channel information to CSV
+    if df_channels is not None and not df_channels.empty:
+        csv_output_path = os.path.join(path, f"{base_name}_{output_suffix}_channel_info.csv")
+        df_channels.to_csv(csv_output_path, index=False)
+        print(f"✓ Channel information saved to: {csv_output_path}")
 
     return output_path, combined_array, df_channels
 
