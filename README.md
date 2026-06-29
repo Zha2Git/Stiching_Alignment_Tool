@@ -104,17 +104,21 @@ Set the **root directory** in `OmeTiff_Stitching_Batch_Processing.ipynb`, then r
 
 ##### 2.2 Configure Channel Names
 
-- Open the `channel_name` directory
+- Open the `channel_name.csv'
 - Modify the filename to match the file to be aligned (**excluding** the `.ome.tif` extension)
 - Name each layer in the final Image, if the name is "empty" or "-", the layer will be skipped and not used.
 
 - The default reference layer for alignment is DAPI, the reference can be changed individual: 
 
 Example: 
-Filename,DAPI,Opal 480,Opal 520,Opal 570,Opal 620,Opal 690,Opal 780,Autofluorescence,Reference
-Tissue_Panel1_Combined_float32,DAPI1,aSMA,CD3,CD68,gamma-H2AX,CC3,CD4,AF_P1,DAPI
-Tissue_Panel2_Combined_float32,DAPI2,Granzyme B,CD8,panCK,Ki67,PD-L1,-,AF_P2,DAPI
-- 
+<small>
+
+| Filename                         | DAPI  | Opal 480     | Opal 520 | Opal 570 | Opal 620     | Opal 690 | Opal 780 | Autofluorescence | Reference |
+|----------------------------------|-------|--------------|----------|----------|--------------|----------|----------|------------------|-----------|
+| Tissue_Panel1_Combined_float32   | DAPI1 | aSMA         | CD3      | CD68     | gamma-H2AX   | CC3      | CD4      | AF_P1            | DAPI      |
+| Tissue_Panel2_Combined_float32   | DAPI2 | Granzyme B   | CD8      | panCK    | Ki67         | PD-L1    | -        | AF_P2            | DAPI      |
+
+</small>
 
 ##### 2.3 Run the Program
 
