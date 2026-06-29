@@ -133,7 +133,7 @@ Example:
 - Filename contains the `al` field
 
 **Final Composite Files** (default enabled with "makefinalimage=True", output path in "destination" ):
-- **Uncompressed flat image without Pyramid**: `final_image_flat.ome.tif` ( default disabled with "nofinalflat= false" )
+- **Uncompressed flat image without Pyramid**: `final_image_flat.ome.tif` ( default disabled with "nofinalflat= True" )
 - **Pyramid-sampled upcompressed image**: `pyr_final_image_unpressed.ome.tif` 
 
 ---
