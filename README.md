@@ -1,7 +1,7 @@
-# Stitching_Alignment_Tool [![DOI](https://zenodo.org/badge/1138627158.svg)](https://doi.org/10.5281/zenodo.18877680)
+# Stitching_Alignment_Tool 
 
 This toolkit consists of two tools: **image stitching** and **alignment** for microscopy images.
-
+<a href="https://doi.org/10.5281/zenodo.18877680"><img src="https://zenodo.org/badge/1138627158.svg" alt="DOI"></a>
 ---
 
 ## Table of Contents
